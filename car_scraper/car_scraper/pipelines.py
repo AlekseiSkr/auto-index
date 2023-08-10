@@ -36,5 +36,10 @@ class MongoDBPipeline:
         self.client.close()
 
     def process_item(self, item, spider):
-        self.db[self.collection_name].insert_one(dict(item))
+        # Use the link as a unique identifier for each ad
+        self.db[self.collection_name].update_one(
+            {'link': item['link']},
+            {'$setOnInsert': dict(item)},
+            upsert=True
+        )
         return item
