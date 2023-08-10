@@ -2,8 +2,8 @@
 
 ### TODO
 - [x] Scrape page 1
-- [ ] Create infrastructure for safe(un-bannable) scraping
-- [ ] Scrape data inside car pages
+- [x] Create infrastructure for safe(un-bannable) scraping
+- [x] Scrape data inside car pages
 - [ ] Scrape all pages
 - [ ] Create demand metric based on the cars disapearing from the system
 - [ ] Create price analysis based on available features & price of the competitors
