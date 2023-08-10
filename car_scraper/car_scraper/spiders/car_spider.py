@@ -58,6 +58,20 @@ class CarSpider(scrapy.Spider):
             # Send a request to the detailed ad page and pass the basic car details
             yield scrapy.Request(listing_url, callback=self.parse_ad_details, meta={'car_details': car_details})
 
+        # Pagination
+        onclick_script = response.css('button.btn.btn-right::attr(onclick)').get()
+        if onclick_script:
+            # Extract the URL from the onclick script
+            next_page = re.search(r"location.href='(.*?)'", onclick_script)
+            if next_page:
+                next_page_url = next_page.group(1)
+                yield SplashRequest(
+                    url=response.urljoin(next_page_url),
+                    callback=self.parse,
+                    args={'wait': 2}
+                )
+
+
     def parse_ad_details(self, response):
         # Get the basic car details passed from the previous method
         details = response.meta['car_details']
